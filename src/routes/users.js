@@ -1,6 +1,7 @@
 const express=require('express');
 const userAuth = require('../middleware/userAuth');
 const Connections = require('../models/Connections');
+const User = require('../models/user');
 const router=express.Router();
 
 //to get all the requests of a user
@@ -33,5 +34,35 @@ router.get("/users/connections",userAuth,async(req,res)=>
     })
     res.json(data);
 })
+
+// user feed
+
+router.get("/user/feed",userAuth,async(req,res)=>
+{
+    const USER_DATA=['firstName','lastName','Age','Gender'];
+    const LoggedInuser=req.user;
+    const page=parseInt(req.query.page) || 1;
+    const limit=parseInt(req.query.limit) || 2;
+    const skip=(page-1)*limit;
+    const connectionreq=await Connections.find({
+        $or:[
+            {toID:LoggedInuser._id},
+            {fromID:LoggedInuser._id}
+        ]
+    }).select('fromID toID');
+    const hideuser=new Set();
+    connectionreq.forEach((req)=>
+    {
+        hideuser.add(req.fromID.toString());
+        hideuser.add(req.toID.toString());
+    })
+    console.log(hideuser);
+    const user=await User.find({
+       $and: [{_id:{$nin: Array.from(hideuser)}},
+        {_id:{$ne:LoggedInuser._id}},],
+    }).select(USER_DATA).skip(skip).limit(limit);
+    res.json(user);
+})
+
 
 module.exports=router;

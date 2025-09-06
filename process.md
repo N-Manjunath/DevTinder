@@ -17,3 +17,13 @@
 -- fromUser-fromUser then it is invalid connection is not allowed,
 -- invalid status is not allowed (Interested,Ignored) (Accepted,Rejected)
 
+send request --> (ignored,Interested) fromId -- toId
+
+review request -->(Accepted,Rejected) by toId for all the request received
+
+get all the requests of an user
+
+get all the connections of an user 
+
+get the feed of an user -- users on feed =total - already sent + already connected
+-- skip() , limit() ---> pagination
