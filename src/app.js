@@ -8,7 +8,7 @@ app.use(cookieParser());
 const Users=require("./routes/validateUser");
 const UserInfo=require("./routes/UserInfo");
 const connections=require("./routes/connections");
-
+const users=require("./routes/users");
 connectDB().then(()=>
 {
     console.log("the db is connected");
@@ -23,7 +23,7 @@ connectDB().then(()=>
 app.use("/",Users);
 app.use("/",UserInfo);
 app.use("/",connections);
-
+app.use("/",users);
 
 
 

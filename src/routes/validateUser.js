@@ -9,13 +9,14 @@ const bcrypt=require("bcrypt");
 router.post("/user",async (req,res)=>{
   try{ 
     validation(req);
-    const {firstName,lastName,EmailId,Password}=req.body;
+    const {firstName,lastName,EmailId,Password,Age,Gender,Skills,Bio}=req.body;
    const hashedpswrd=await bcrypt.hash(Password,4);
    const user1=new User({
     firstName,
-    lastName,
+    lastName,Bio,
     Password:hashedpswrd,
     EmailId,
+    Age,Gender,Skills,
    });
    await user1.save();
    res.send("succesfully added new user");

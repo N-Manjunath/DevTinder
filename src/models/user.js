@@ -14,6 +14,7 @@ const userSchema=new Schema({
     EmailId:{ type:String,
         required:true,
         trim:true,
+        unique:true,
         validate(value)
         {
             if(!validator.isEmail(value))
@@ -30,13 +31,20 @@ const userSchema=new Schema({
     },
     Gender:{
         type:String,
-        enum:['male','female'],
+        enum:['male','female','other'],
 
+    },
+    Bio:
+    {
+        type:String,
+        default:'This is the user',
     },
     Skills:{
         type:[String],
-    }
-});
+    }}
+,{timestamps:true});
+
+
 userSchema.methods.isjwt=async function(){
 const user=this;
    const token=await jwt.sign({_id:user._id},"Manju1612");
