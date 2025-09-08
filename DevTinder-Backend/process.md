@@ -29,6 +29,4 @@ get the feed of an user -- users on feed =total - already sent + already connect
 -- skip() , limit() ---> pagination
 
 
-// Front-End
---vite react
---tailwind css with daisy ui plugin
+
