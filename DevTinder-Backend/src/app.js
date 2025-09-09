@@ -1,7 +1,6 @@
 const express=require("express");
 const app=express();
 const connectDB=require("./config/database");
-const port=1234;
 const cors = require('cors')
 app.use(cors(
     {
@@ -16,11 +15,11 @@ const Users=require("./routes/validateUser");
 const UserInfo=require("./routes/UserInfo");
 const connections=require("./routes/connections");
 const users=require("./routes/users");
-
+const PORT=process.env.PORT;
 connectDB().then(()=>
 {
     console.log("the db is connected");
-    app.listen(port,(req,res)=>
+    app.listen(PORT,(req,res)=>
 {
     console.log("the server is connected");
 });

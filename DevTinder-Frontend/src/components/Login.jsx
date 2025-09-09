@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 const Login = () => {
-    const[EmailId,setEmailId]=useState("");
-    const[Password,setPassword]=useState("");
+  const dispatch=useDispatch();
+    const[EmailId,setEmailId]=useState("manju@gmail.com");
+    const[Password,setPassword]=useState("manju@123");
     const handlelogin=async()=>
     {
         try{
@@ -10,7 +13,7 @@ const Login = () => {
             EmailId,
             Password,
         },{withCredentials:true});
-        console.log(res);
+        dispatch(addUser(res.data));
         }
         catch(err)
         {
@@ -22,10 +25,10 @@ const Login = () => {
     <div className="card bg-base-300 text-primary-content w-80  justify-center">
   <div className="card-body">
     <h4 className='flex justify-center text-2xl font-bold'>Login</h4>
-    <label>Email{EmailId}
+    <label>Email
     <input type="text" value={EmailId} placeholder="Type here" className="input my-2" onChange={(e)=>setEmailId(e.target.value)}/>
     </label>
-    <label>Password{Password}
+    <label>Password
   <input type="text" value={Password} placeholder="Type here" className="input my-3" onChange={(e)=>setPassword(e.target.value)} />
     </label>
   

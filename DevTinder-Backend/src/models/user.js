@@ -47,7 +47,7 @@ const userSchema=new Schema({
 
 userSchema.methods.isjwt=async function(){
 const user=this;
-   const token=await jwt.sign({_id:user._id},"Manju1612");
+   const token=await jwt.sign({_id:user._id},process.env.JWT_SECRET);
    return token;
 }
 userSchema.methods.validatePassword=async function(Inputpassword){
