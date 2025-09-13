@@ -39,7 +39,7 @@ router.get("/users/connections",userAuth,async(req,res)=>
 
 router.get("/user/feed",userAuth,async(req,res)=>
 {
-    const USER_DATA=['firstName','lastName','Age','Gender'];
+    const USER_DATA=['firstName','lastName','Age','Gender','Bio'];
     const LoggedInuser=req.user;
     const page=parseInt(req.query.page) || 1;
     const limit=parseInt(req.query.limit) || 2;
@@ -56,11 +56,11 @@ router.get("/user/feed",userAuth,async(req,res)=>
         hideuser.add(req.fromID.toString());
         hideuser.add(req.toID.toString());
     })
-    console.log(hideuser);
+    //console.log(hideuser);
     const user=await User.find({
        $and: [{_id:{$nin: Array.from(hideuser)}},
         {_id:{$ne:LoggedInuser._id}},],
-    }).select(USER_DATA).skip(skip).limit(limit);
+    }).select(USER_DATA)
     res.json(user);
 })
 

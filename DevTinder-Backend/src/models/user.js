@@ -28,10 +28,12 @@ const userSchema=new Schema({
         required:true,
     },
     Age:{ type:Number,
+        required:true,
     },
     Gender:{
         type:String,
         enum:['male','female','other'],
+        required:true,
 
     },
     Bio:
@@ -47,7 +49,7 @@ const userSchema=new Schema({
 
 userSchema.methods.isjwt=async function(){
 const user=this;
-   const token=await jwt.sign({_id:user._id},process.env.JWT_SECRET);
+   const token=await jwt.sign({_id:user._id},process.env.JWT_SECRET,  { expiresIn: "1h" } );
    return token;
 }
 userSchema.methods.validatePassword=async function(Inputpassword){

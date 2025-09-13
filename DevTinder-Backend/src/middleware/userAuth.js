@@ -11,6 +11,7 @@
     const{_id}=DecodeMsg;
     const user=await User.findById(_id);
     req.user=user;
+   // console.log(req.headers.cookie);
     next();
  }
  catch(err)

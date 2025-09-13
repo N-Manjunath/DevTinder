@@ -3,8 +3,8 @@ const router=express.Router();
 const validation=require('../utils/validate');
 const User=require("../models/user");
 const bcrypt=require("bcrypt");
-//Sign In
 
+//Sign In
 
 router.post("/user",async (req,res)=>{
   try{ 
@@ -44,13 +44,23 @@ router.post("/login",async (req,res)=>
         throw new Error("Password is wrong !");
     }
     const token=await user.isjwt();
-    res.cookie("token",token);
+   res.cookie("token", token,
+    {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
+
+
     res.send(user);
-}
-catch(err){
-    res.status(400).send("Failed :"+err.message)
-}
-})
+  } catch (err) {
+    res.status(400).send("Failed :" + err.message);
+  }
+});
+
+// LOGOUT
+router.post("/logout", (req, res) => {
+ res.cookie("token",null,{
+  expires:new Date(Date.now()),
+ });
+  res.send("Logout successful");
+});
 
 
 

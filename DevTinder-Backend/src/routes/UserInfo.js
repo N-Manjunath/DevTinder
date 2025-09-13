@@ -2,6 +2,8 @@ const express=require("express");
 const router=express.Router();
 const User=require("../models/user");
 const userAuth=require("../middleware/userAuth");
+
+// get user
 router.get("/user",userAuth,async (req,res)=>
 {
   try{
@@ -16,7 +18,7 @@ router.get("/user",userAuth,async (req,res)=>
 
 //Update
 
-router.patch('/user',userAuth,async(req,res)=>
+router.patch('/user/edit',userAuth,async(req,res)=>
 {
     try
     {
@@ -33,9 +35,9 @@ router.patch('/user',userAuth,async(req,res)=>
         {
             data.Password=await bcrypt.hash(data.Password,4)
         }
-const datainfo= await User.findByIdAndUpdate(userID,data,{runValidators: true,new:true});
+const updatedUser= await User.findByIdAndUpdate(userID,data,{runValidators: true,new:true});
     //console.log(datainfo);
-    res.send('the update is done');
+    res.send(updatedUser);
 }   catch(err){
         res.status(400).send("ERROR :"+err.message);
     } 
