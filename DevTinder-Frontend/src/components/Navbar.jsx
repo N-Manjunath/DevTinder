@@ -12,7 +12,7 @@ const Navbar = () => {
   {
     await axios.post("http://localhost:1234/logout",{},
       {withCredentials:true,})
-    console.log("remove user is called !")
+    //console.log("remove user is called !")
     dispatch(removeUser());
     return navigate("/login");
   }
@@ -40,7 +40,12 @@ const Navbar = () => {
             Profile
           </Link>
         </li>
-        <li><a>Settings</a></li>
+        <li>
+          <Link to="/requests" className="justify-between">
+            Requests
+          </Link>
+        </li>
+       <li> <Link to="/connections">Connections</Link></li>
         <li><Link onClick={handlelogout}>Logout</Link></li>
       </ul>
     </div>

@@ -6,6 +6,8 @@ const User = require("../models/user");
 const { route } = require("./UserInfo");
 const router=express.Router();
 
+
+//sending the status of [ignored ,Interested]
 router.post("/send/:status/:userID",userAuth,async(req,res)=>
 {
     try{
@@ -41,6 +43,9 @@ catch(err)
     res.status(400).send("ERROR :"+err.message);
 }
 })
+
+
+//Reviewing the Request
 
 router.post("/review/:status/:reqId",userAuth,async(req,res)=>
 {

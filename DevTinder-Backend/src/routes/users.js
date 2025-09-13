@@ -10,7 +10,7 @@ router.get("/users/requests/received",userAuth,async(req,res)=>
 {
     const LoggedInuser=req.user;
     const data=await Connections.find({toID:LoggedInuser._id,status:"Interested"})
-    .populate("fromID"," firstName lastName");
+    .populate("fromID"," firstName lastName Gender Age");
     res.json(data);
 })
 
@@ -24,13 +24,13 @@ router.get("/users/connections",userAuth,async(req,res)=>
             {toID:LoggedInuser._id,status:"Accepted"},
             {fromID:LoggedInuser._id,status:"Accepted"}
         ]
-    }).populate("toID","firstName").populate("fromID","firstName");
+    }).populate("toID","firstName lastName Gender Age").populate("fromID","firstName lastName Gender Age");
     const data=connection.map((row)=>{
         if(row.fromID._id.toString()===LoggedInuser._id.toString())
         {
             return row.toID;
         }
-        return fromID;        
+        return row.fromID;        
     })
     res.json(data);
 })

@@ -13,7 +13,7 @@ const EditProfile = ({user}) => {
     const saveprofile=async()=>{
         try{
             const res=await axios.patch('http://localhost:1234/user/edit',{firstName,lastName,Gender,Bio,Age},{withCredentials:true});
-        console.log(res.data);
+        //console.log(res.data);
             dispatch(addUser(res.data));
           }catch(err){
             console.log(err);
@@ -21,7 +21,7 @@ const EditProfile = ({user}) => {
     }
   return (
   
-    <div className="card bg-base-300 w-82 shadow-sm mx-2 my-12">
+    <div className="card bg-base-300 w-82 shadow-sm mx-auto my-12">
   <div className="card-body">
     <h2 className="text-xl font-bold mx-2">Edit Profile</h2>
     <input type="text" placeholder="firstName" onChange={(e)=>setfirstName(e.target.value)} value={firstName} className="input m-1" />

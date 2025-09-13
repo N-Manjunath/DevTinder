@@ -14,7 +14,7 @@ const Body = () => {
     const res= await axios.get("http://localhost:1234/user",{
       withCredentials:true,
     });
-    console.log("This redux is called !",res.data);
+    //console.log("This redux is called !",res.data);
    // console.log(res.data);
       dispatch(addUser(res.data));
       return navigate('/');

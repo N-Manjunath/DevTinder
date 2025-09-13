@@ -36,12 +36,12 @@ router.post("/login",async (req,res)=>
     const user= await User.findOne({EmailId});
     if(!user)
     {
-        throw new Error("EmailId is not registered  please login!");
+        return res.status(401).send("Invalid Email or Password");
     }
     const Match=await user.validatePassword(Password);
     if(!Match)
     {
-        throw new Error("Password is wrong !");
+       return res.status(401).send("Invalid Email or Password");
     }
     const token=await user.isjwt();
    res.cookie("token", token,
@@ -50,7 +50,7 @@ router.post("/login",async (req,res)=>
 
     res.send(user);
   } catch (err) {
-    res.status(400).send("Failed :" + err.message);
+   return res.status(400).send("Failed :" + err.message);
   }
 });
 

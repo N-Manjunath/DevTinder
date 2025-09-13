@@ -7,6 +7,7 @@ const Login = () => {
   const dispatch=useDispatch();
     const[EmailId,setEmailId]=useState("manju@gmail.com");
     const[Password,setPassword]=useState("manju@123");
+    const[error,seterror]=useState("");
     const navigate=useNavigate();
     const handlelogin=async()=>
     {
@@ -15,13 +16,14 @@ const Login = () => {
             EmailId,
             Password,
         },{withCredentials:true});
-        console.log(res.data);
+      //  console.log(res.data);
         dispatch(addUser(res.data));
-        navigate("/")
+       return navigate("/");
         }
         catch(err)
         {
-            console.log(err);
+          seterror(err.response.data);
+            //console.log(err.response.data);
         }
     }
   return (
@@ -35,7 +37,7 @@ const Login = () => {
     <label>Password
   <input type="text" value={Password} placeholder="Type here" className="input my-3" onChange={(e)=>setPassword(e.target.value)} />
     </label>
-  
+    <p className='text-red-500 mx-2 mb-3'>{error}</p>
     <div className="card-actions justify-center">
       <button className="btn" onClick={handlelogin}>Login</button>
     </div>
