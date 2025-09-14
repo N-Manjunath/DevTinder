@@ -21,14 +21,15 @@ const Navbar = () => {
   <div className="flex-1 mx-4">
     <Link to="/" className="btn btn-ghost text-xl"> DevTinder ❤️</Link>
   </div>
-  {user&&
-  (<div className="flex mx-5">
+  {user&&<><p>Hi ,{user.firstName+" "+user.lastName}</p>
+  <div className="flex mx-5">
     <div className="dropdown dropdown-end">
+
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-3xl mx-3'">
           <img
            alt="Tailwind CSS Navbar component"
-            src="https://static.vecteezy.com/system/resources/previews/005/005/788/non_2x/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg" />
+            src={user.PhotoUrl} />
             
         </div>
       </div>
@@ -42,14 +43,15 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/requests" className="justify-between">
-            Requests
+             Received Requests
           </Link>
         </li>
        <li> <Link to="/connections">Connections</Link></li>
         <li><Link onClick={handlelogout}>Logout</Link></li>
       </ul>
     </div>
-  </div>)
+  </div>
+  </>
 }
 </div>
   )

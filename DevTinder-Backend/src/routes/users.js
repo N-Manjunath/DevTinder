@@ -10,7 +10,7 @@ router.get("/users/requests/received",userAuth,async(req,res)=>
 {
     const LoggedInuser=req.user;
     const data=await Connections.find({toID:LoggedInuser._id,status:"Interested"})
-    .populate("fromID"," firstName lastName Gender Age");
+    .populate("fromID"," firstName lastName Gender Age PhotoUrl");
     res.json(data);
 })
 
@@ -24,7 +24,7 @@ router.get("/users/connections",userAuth,async(req,res)=>
             {toID:LoggedInuser._id,status:"Accepted"},
             {fromID:LoggedInuser._id,status:"Accepted"}
         ]
-    }).populate("toID","firstName lastName Gender Age").populate("fromID","firstName lastName Gender Age");
+    }).populate("toID","firstName lastName Gender Age PhotoUrl Skills").populate("fromID","firstName lastName Gender Age PhotoUrl Skills");
     const data=connection.map((row)=>{
         if(row.fromID._id.toString()===LoggedInuser._id.toString())
         {
@@ -39,7 +39,7 @@ router.get("/users/connections",userAuth,async(req,res)=>
 
 router.get("/user/feed",userAuth,async(req,res)=>
 {
-    const USER_DATA=['firstName','lastName','Age','Gender','Bio'];
+    const USER_DATA=['firstName','lastName','Age','Gender','Bio','Skills','PhotoUrl'];
     const LoggedInuser=req.user;
     const page=parseInt(req.query.page) || 1;
     const limit=parseInt(req.query.limit) || 2;

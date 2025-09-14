@@ -8,11 +8,11 @@ const validation=(req)=>
     }
     else if(!validator.isEmail(EmailId))
     {
-        throw new Error("Invalid Email")
+       throw new Error("Invalid Email")
     }
     else if(!validator.isStrongPassword(Password))
     {
-        throw new error("Enter a strong Password");
+       throw new Error("Enter a strong Password");
     }
 }
 module.exports=validation;

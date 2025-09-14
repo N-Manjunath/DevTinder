@@ -28,12 +28,10 @@ const userSchema=new Schema({
         required:true,
     },
     Age:{ type:Number,
-        required:true,
     },
     Gender:{
         type:String,
-        enum:['male','female','other'],
-        required:true,
+        enum:['male','female','other']
 
     },
     Bio:
@@ -43,7 +41,12 @@ const userSchema=new Schema({
     },
     Skills:{
         type:[String],
-    }}
+    },
+    PhotoUrl:{
+        type:String,
+        default:'https://static.vecteezy.com/system/resources/previews/046/010/545/non_2x/user-icon-simple-design-free-vector.jpg',
+    },
+}
 ,{timestamps:true});
 
 

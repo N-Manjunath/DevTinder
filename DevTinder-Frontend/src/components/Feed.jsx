@@ -6,13 +6,15 @@ import { addFeed } from '../utils/feedSlice';
 
 const Feed =() => {
   const dispatch=useDispatch();
-  const data=useSelector((store)=>store.feed);
-  const feed=async()=>{
+  const feed=useSelector((store)=>store.feed);
+  const feeds=async()=>{
+    if(feed) return;
   try{
     const res=await axios("http://localhost:1234/user/feed",{
       withCredentials:true,
     });
     dispatch(addFeed(res.data));
+  //  console.log(res.data);
   }catch(err)
   {
     console.log(err);
@@ -20,14 +22,14 @@ const Feed =() => {
 }
 useEffect(()=>
 {
-  feed();
+  feeds();
 },[])
-  return (data &&(
-    <div>
-      <UserCard user={data}/>
+  return (
+    feed &&<div>
+        <UserCard user={feed[0]} />
     </div>
+    
   )
-)
 }
 
 export default Feed;

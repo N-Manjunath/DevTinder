@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addrequests } from '../utils/RequestsSlice';
+import { addrequests, removeReq } from '../utils/RequestsSlice';
 
 const Requests = () => {
     const data=useSelector(store=>store.requests);
@@ -9,12 +9,13 @@ const Requests = () => {
     const fetchReq=async()=>
     {
         const res=await axios("http://localhost:1234/users/requests/received",{withCredentials:true});
-        console.log(res.data);
+      //  console.log(res.data);
         dispatch(addrequests(res.data));
     }
     const handlereq=async(status,reqId)=>
     {
-        const res=await axios.post(`http://localhost:1234/review/${status}/${reqId}`,{},{withCredentials:true});
+        const res=await axios.post('http://localhost:1234/review/'+status+'/'+reqId,{},{withCredentials:true});
+        dispatch(removeReq(reqId));
     }
     useEffect(()=>
     {
@@ -32,25 +33,33 @@ const Requests = () => {
         {data.map(data=>
             {
                 const{_id}=data;
-                const{firstName,lastName,Age,Gender}=data.fromID;
+                const{firstName,lastName,Age,Gender,PhotoUrl}=data.fromID;
+                console.log(PhotoUrl);
                 return(
-                   <div key={_id} className="card bg-base-200 w-96 my-5 mx-auto">
-                    <h2 className='text-center my-1'>{firstName+" "+lastName}</h2>
-                        <div className="justify-center items-center flex mt-3">
-                            <h3 className='tex'>{Gender}</h3>
-                            <h2 className='mx-2'>{Age}</h2>
-                            </div>
-                            <div className="card-actions justify-center my-4">
-                            <button className="btn btn-success" onClick={()=>handlereq('Accepted',_id)}>Accept</button>
-                            <button className="btn btn-error" onClick={()=>handlereq('Rejected',_id)}>Reject</button>
-                            </div>
-                        
-                    </div>
+                   <div key={_id} className="card bg-base-200 w-80 my-5 mx-auto flex-1">
+  <div className="flex items-center p-3">
+    {/* Image on left */}
+    <figure className="flex-shrink-0">
+      <img src={PhotoUrl} className="w-24 h-24 rounded-full object-cover" alt="Img" />
+    </figure>
 
-                )
-            }
-        )
-    }
+    {/* Content on right */}
+    <div className="ml-4 flex-1">
+      <h2 className="text-lg font-semibold">{firstName + " " + lastName}</h2>
+
+      <div className="flex items-center mt-2 text-sm text-gray-700">
+        <span className='text-white'>{Gender}</span>
+        <span className='text-white'>{Age}</span>
+      </div>
+
+      <div className="card-actions justify-start mt-4">
+        <button className="btn btn-success btn-sm" onClick={() => handlereq("Accepted", _id)}>Accept</button>
+        <button className="btn btn-error btn-sm ml-2" onClick={() => handlereq("Rejected", _id)}>Reject</button>
+      </div>
+    </div>
+  </div>
+</div>
+   )})  }
     </div>
 }
     </>

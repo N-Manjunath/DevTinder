@@ -25,7 +25,7 @@ router.patch('/user/edit',userAuth,async(req,res)=>
     const user=req.user;
     const userID=user._id;
     const data= req.body;
-        const AllowedUpdates=['firstName','lastName','Gender','Skills','Age','Password','Bio'];
+        const AllowedUpdates=['firstName','lastName','Gender','Skills','Age','Password','Bio','PhotoUrl'];
     const updates=Object.keys(data).every((k)=>AllowedUpdates.includes(k));
     if(!updates)
     {

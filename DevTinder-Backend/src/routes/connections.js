@@ -15,13 +15,7 @@ router.post("/send/:status/:userID",userAuth,async(req,res)=>
     const fromID=user._id;
     const toID=req.params.userID;
     const status=req.params.status;
-    const Userconnection=new Connections({
-        fromID,
-        toID,
-        status,
-
-    })
-    const hi1=await User.findById(toID);
+     const hi1=await User.findById(toID);
     //console.log(hi1);
     if(!hi1)
     {
@@ -34,9 +28,16 @@ router.post("/send/:status/:userID",userAuth,async(req,res)=>
     {
         throw new Error("The connection already exists !");
     }
+    const Userconnection=new Connections({
+        fromID,
+        toID,
+        status,
+
+    })
+   
     const data=await Userconnection.save();
-    res.json(  ` message:'The connection is sent from ${user.firstName} to ${hi1.firstName}
-    `)
+    res.json(data);
+    //console.log(data);
 }
 catch(err)
 {
