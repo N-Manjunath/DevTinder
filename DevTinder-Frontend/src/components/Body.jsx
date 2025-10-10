@@ -11,7 +11,7 @@ const Body = () => {
   const navigate=useNavigate();
   const fetchUser=async()=>{
     try{
-    const res= await axios.get("http://localhost:1234/user",{
+    const res= await axios.get(`${import.meta.env.VITE_API_URL}/user`,{
       withCredentials:true,
     });
       dispatch(addUser(res.data));

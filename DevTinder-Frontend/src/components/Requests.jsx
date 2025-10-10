@@ -8,13 +8,13 @@ const Requests = () => {
     const dispatch=useDispatch();
     const fetchReq=async()=>
     {
-        const res=await axios("http://localhost:1234/users/requests/received",{withCredentials:true});
+        const res=await axios(`${import.meta.env.VITE_API_URL}/users/requests/received`,{withCredentials:true});
       //  console.log(res.data);
         dispatch(addrequests(res.data));
     }
     const handlereq=async(status,reqId)=>
     {
-        const res=await axios.post('http://localhost:1234/review/'+status+'/'+reqId,{},{withCredentials:true});
+        const res=await axios.post(`${import.meta.env.VITE_API_URL}/review/'+status+'/'+reqId,{}`,{withCredentials:true});
         dispatch(removeReq(reqId));
     }
     useEffect(()=>

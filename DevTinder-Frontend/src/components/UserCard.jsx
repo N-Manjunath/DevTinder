@@ -9,7 +9,7 @@ const dispatch=useDispatch();
 const{firstName,lastName,Age,Gender,Bio,_id,PhotoUrl}=user;
 const handlesentreq=async(status,reqID)=>
     {
-        const res=await axios.post('http://localhost:1234/send/'+status+'/'+reqID,{},{withCredentials:true});
+        const res=await axios.post(`${import.meta.env.VITE_API_URL}/send/'+status+'/'+reqID,{}`,{withCredentials:true});
         dispatch(removeFeed(reqID));
     }
   return (

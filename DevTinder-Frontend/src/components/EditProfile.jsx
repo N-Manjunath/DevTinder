@@ -17,7 +17,7 @@ const EditProfile = ({user}) => {
     const navigate=useNavigate();
     const saveprofile=async()=>{
         try{
-            const res=await axios.patch('http://localhost:1234/user/edit',{firstName,lastName,Gender,Bio,Age,Skills,PhotoUrl},{withCredentials:true});
+            const res=await axios.patch(`${import.meta.env.VITE_API_URL}/user/edit`,{firstName,lastName,Gender,Bio,Age,Skills,PhotoUrl},{withCredentials:true});
         //console.log(res.data);
             dispatch(addUser(res.data));
             navigate("/");

@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate=useNavigate();
   const handlelogout=async()=>
   {
-    await axios.post("http://localhost:1234/logout",{},
+    await axios.post(`${import.meta.env.VITE_API_URL}/logout`,{},
       {withCredentials:true,})
     //console.log("remove user is called !")
     dispatch(removeUser());

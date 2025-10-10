@@ -17,7 +17,7 @@ const Login = () => {
     const handlelogin=async()=>
     {
         try{
-        const res = await axios.post("http://localhost:1234/login",{
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/login`,{
             EmailId,
             Password,
         },{withCredentials:true});
@@ -34,7 +34,7 @@ const Login = () => {
        const handlesignup=async()=>
       {
         try{
-        const res = await axios.post("http://localhost:1234/signup",{
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/signup`,{
           firstName,
           lastName,
             EmailId,

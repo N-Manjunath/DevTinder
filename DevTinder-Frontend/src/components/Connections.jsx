@@ -10,7 +10,7 @@ const Connections = () => {
     const fetchconnections=async()=>
     {
         try{
-            const res=await axios("http://localhost:1234/users/connections",{withCredentials:true});
+            const res=await axios(`${import.meta.env.VITE_API_URL}/users/connections`,{withCredentials:true});
         dispatch(addConnections(res.data));
         }catch(err)
         {
