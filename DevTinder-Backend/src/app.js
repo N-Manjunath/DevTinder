@@ -1,13 +1,24 @@
 const express=require("express");
 const app=express();
 const connectDB=require("./config/database");
-const cors = require('cors')
-app.use(cors(
-    {
-        origin:"http://localhost:5173",
-        credentials:true,
+const cors = require("cors");
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://dev-tinder-c2sg-n-manjunaths-projects.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
     }
-))
+  },
+  credentials: true,
+}));
+
 app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
