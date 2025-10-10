@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm">
   <div className="flex-1 mx-4">
-    <Link to="/" className="btn btn-ghost text-xl"> DevTinder ❤️</Link>
+    <Link to="/" className="cursor-pointer text-2xl sm:text-3xl font-extrabold tracking-tight select-none px-2 bg-gradient-to-r from-sky-400 to-pink-400 text-transparent bg-clip-text transition duration-300 hover:brightness-110 hover:underline underline-offset-4"> DevTinder ❤️</Link>
   </div>
   {user&&<><p>Hi ,{user.firstName+" "+user.lastName}</p>
   <div className="flex mx-5">
