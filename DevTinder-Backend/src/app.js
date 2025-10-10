@@ -5,7 +5,8 @@ const cors = require("cors");
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://dev-tinder-c2sg-n-manjunaths-projects.vercel.app"
+  "https://dev-tinder-c2sg-n-manjunaths-projects.vercel.app",
+  "https://devtinder-pi.vercel.app" // ✅ Add this line
 ];
 
 app.use(cors({
@@ -13,11 +14,13 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("❌ Blocked by CORS:", origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
 }));
+
 
 app.use(express.json());
 const cookieParser = require("cookie-parser");
