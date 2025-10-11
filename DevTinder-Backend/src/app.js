@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const allowedOrigins = [
   'http://localhost:5173', // dev
-  'https://dev-tinder-4lzm-bbub7avvd-n-manjunaths-projects.vercel.app', // prod frontend
+  'https://dev-tinder-mern.vercel.app', // prod frontend
 ];
 
 app.use(cors({
