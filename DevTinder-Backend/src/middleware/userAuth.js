@@ -19,7 +19,7 @@
  }
  catch(err)
  {
-    res.status(400).send("Failed so ,:"+err.message);
+    res.status(400).send("Failed  :"+err.message);
  }
  }
  module.exports=userAuth;
