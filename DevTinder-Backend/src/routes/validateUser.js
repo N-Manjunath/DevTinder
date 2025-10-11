@@ -62,7 +62,8 @@ router.post("/login",async (req,res)=>
     res.cookie("token", token, {
   httpOnly: true,
   secure: true, // true because Render + Vercel use HTTPS
-  sameSite: "none", // allows cookie sharing across different domains
+  sameSite: "none",
+   domain: ".onrender.com", // allows cookie sharing across different domains
   expires: new Date(Date.now() + 8 * 3600000),
 });
 
@@ -83,6 +84,7 @@ res.cookie("token", null, {
   httpOnly: true,
   secure: true,
   sameSite: "none",
+   domain: ".onrender.com",
   expires: new Date(Date.now()),
 });
 
