@@ -30,7 +30,7 @@ router.post("/signup",async (req,res)=>{
   sameSite: "none", // allows cookie sharing across different domains
   expires: new Date(Date.now() + 8 * 3600000),
 });
-    res.send(saveduser);
+    res.json(saveduser,token);
   }
 catch(err){
         return res.status(400).send(""+ err.message);
