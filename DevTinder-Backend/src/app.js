@@ -1,11 +1,11 @@
 const express=require("express");
 const app=express();
 const connectDB=require("./config/database");
-const cors = require("cors");
+const cors = require('cors');
 
 const allowedOrigins = [
-    "http://localhost:5173", // dev
-  "https://dev-tinder-c2sg-n-manjunaths-projects.vercel.app"
+  'http://localhost:5173', // dev
+  'https://dev-tinder-4lzm-bbub7avvd-n-manjunaths-projects.vercel.app', // prod frontend
 ];
 
 app.use(cors({
@@ -13,10 +13,17 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log("❌ Blocked by CORS:", origin);
-      callback(new Error("Not allowed by CORS"));
+      console.log('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
     }
   },
+  credentials: true,
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+}));
+
+// Respond to preflight requests
+app.options('*', cors({
+  origin: allowedOrigins,
   credentials: true,
 }));
 
