@@ -67,7 +67,7 @@ router.post("/login",async (req,res)=>
 });
 
 
-    res.send(user);
+    res.json(user,token);
   } catch (err) {
    return res.status(400).send("Failed :" + err.message);
   }
