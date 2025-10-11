@@ -19,12 +19,19 @@ router.post("/signup",async (req,res)=>{
    });
    const saveduser=await user1.save();
    const token=await saveduser.isjwt();
-   res.cookie("token", token,
-    {expires:new Date(Date.now()+8*3600000)});
+  //  res.cookie("token", token,
+  //   {expires:new Date(Date.now()+8*3600000)});
     //console.log(user1);
     //console.log(saveduser); 
+
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // true because Render + Vercel use HTTPS
+  sameSite: "none", // allows cookie sharing across different domains
+  expires: new Date(Date.now() + 8 * 3600000),
+});
     res.send(saveduser);
-}
+  }
 catch(err){
         return res.status(400).send(""+ err.message);
     }
@@ -48,8 +55,16 @@ router.post("/login",async (req,res)=>
        return res.status(401).send("Invalid Email or Password");
     }
     const token=await user.isjwt();
-   res.cookie("token", token,
-    {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
+  //  res.cookie("token", token,
+  //   {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
+
+
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // true because Render + Vercel use HTTPS
+  sameSite: "none", // allows cookie sharing across different domains
+  expires: new Date(Date.now() + 8 * 3600000),
+});
 
 
     res.send(user);
@@ -60,9 +75,17 @@ router.post("/login",async (req,res)=>
 
 // LOGOUT
 router.post("/logout", (req, res) => {
- res.cookie("token",null,{
-  expires:new Date(Date.now()),
- });
+//  res.cookie("token",null,{
+//   expires:new Date(Date.now()),
+//  });
+
+res.cookie("token", null, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  expires: new Date(Date.now()),
+});
+
   res.send("Logout successful");
 });
 
