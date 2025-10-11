@@ -4,9 +4,7 @@ const connectDB=require("./config/database");
 const cors = require("cors");
 
 const allowedOrigins = [
-  "http://localhost:5173",
-  "https://dev-tinder-c2sg-n-manjunaths-projects.vercel.app",
-  "https://devtinder-pi.vercel.app" // ✅ Add this line
+  "https://dev-tinder-c2sg-n-manjunaths-projects.vercel.app"
 ];
 
 app.use(cors({
