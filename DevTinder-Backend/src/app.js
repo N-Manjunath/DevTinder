@@ -8,21 +8,25 @@ const app = express();
 
 // Middleware
 const allowedOrigins = [
-  "http://localhost:5173", // local dev
-  // You can add any static URLs if you have them
+  "http://localhost:5173",
 ];
+
 app.use(cors({
   origin: function(origin, callback) {
-    // allow requests with no origin (like Postman, curl)
+    // allow requests with no origin (Postman, curl)
     if (!origin) return callback(null, true);
-    // allow any origin ending with your vercel project domain
-    if (origin.endsWith(".vercel.app")) return callback(null, true);
 
-    // else block
+    // allow localhost or any Vercel deployment
+    if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
+      return callback(null, true);
+    }
+
+    // block all others
     callback(new Error("Not allowed by CORS"));
   },
   credentials: true
 }));
+
 
 
 app.use(express.json());
