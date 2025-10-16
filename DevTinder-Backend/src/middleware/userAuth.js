@@ -3,7 +3,7 @@
  const userAuth=async(req,res,next)=>{
  try{  
   const token = req.cookies.token; // ✅ read token from cookies
-
+console.log(token);
 if (!token) {
   return res.status(401).send("Please login"); // ✅ fail gracefully
 }

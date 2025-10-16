@@ -26,12 +26,14 @@ router.post("/signup",async (req,res)=>{
 // ✅ Determine production mode by Render URL or fallback
 const isProduction = process.env.VITE_API_URL?.includes("https://") || false;
 
-  res.cookie("token", token, {
+ res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,                // true for deployed (HTTPS), false for local dev
-  sameSite: isProduction ? "none" : "lax", // "none" for cross-origin in prod
-  expires: new Date(Date.now() + 8 * 3600000),
+  secure: true,         // Render HTTPS
+  sameSite: "none",     // cross-origin
+  domain: "devtinder-p5ic.onrender.com", // ✅ explicitly set backend domain
+  expires: new Date(Date.now() + 8*3600000),
 });
+
 
     res.json({saveduser,token});
   }
@@ -62,12 +64,14 @@ router.post("/login",async (req,res)=>
   //   {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
 const isProduction = process.env.VITE_API_URL?.includes("https://") || false;
 
-  res.cookie("token", token, {
+ res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,                // true for deployed (HTTPS), false for local dev
-  sameSite: isProduction ? "none" : "lax", // "none" for cross-origin in prod
-  expires: new Date(Date.now() + 8 * 3600000),
+  secure: true,         // Render HTTPS
+  sameSite: "none",     // cross-origin
+  domain: "devtinder-p5ic.onrender.com", // ✅ explicitly set backend domain
+  expires: new Date(Date.now() + 8*3600000),
 });
+
 
 
     res.json({user,token});
