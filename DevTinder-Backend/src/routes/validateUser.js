@@ -23,13 +23,16 @@ router.post("/signup",async (req,res)=>{
   //   {expires:new Date(Date.now()+8*3600000)});
     //console.log(user1);
     //console.log(saveduser); 
+// ✅ Determine production mode by Render URL or fallback
+const isProduction = process.env.VITE_API_URL?.includes("https://") || false;
 
-    res.cookie("token", token, {
+  res.cookie("token", token, {
   httpOnly: true,
-  secure: true, // true because Render + Vercel use HTTPS
-  sameSite: "none", // allows cookie sharing across different domains
+  secure: isProduction,                // true for deployed (HTTPS), false for local dev
+  sameSite: isProduction ? "none" : "lax", // "none" for cross-origin in prod
   expires: new Date(Date.now() + 8 * 3600000),
 });
+
     res.json({saveduser,token});
   }
 catch(err){
@@ -57,12 +60,12 @@ router.post("/login",async (req,res)=>
     const token=await user.isjwt();
   //  res.cookie("token", token,
   //   {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
+const isProduction = process.env.VITE_API_URL?.includes("https://") || false;
 
-
-    res.cookie("token", token, {
+  res.cookie("token", token, {
   httpOnly: true,
-  secure: true, // true because Render + Vercel use HTTPS
-  sameSite: "none",
+  secure: isProduction,                // true for deployed (HTTPS), false for local dev
+  sameSite: isProduction ? "none" : "lax", // "none" for cross-origin in prod
   expires: new Date(Date.now() + 8 * 3600000),
 });
 

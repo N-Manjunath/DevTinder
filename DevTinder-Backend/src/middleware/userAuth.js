@@ -2,20 +2,18 @@
  const jwt=require("jsonwebtoken");
  const userAuth=async(req,res,next)=>{
  try{  
-   console.log("userauth triggered !"); 
-    const {token}=req.cookies;
-    console.log("cookies",req.cookies);
-    console.log(token);
-    if(!token)
-    {
-        throw new Error("please login ur account");
-    }
-    const DecodeMsg=jwt.verify(token,"Manju1612");
-    const{_id}=DecodeMsg;
-    const user=await User.findById(_id);
-    req.user=user;
-   // console.log(req.headers.cookie);
-    next();
+  const token = req.cookies.token; // ✅ read token from cookies
+
+if (!token) {
+  return res.status(401).send("Please login"); // ✅ fail gracefully
+}
+
+const decoded = jwt.verify(token, process.env.JWT_SECRET); // use env secret
+const user = await User.findById(decoded._id);
+if (!user) return res.status(401).send("User not found");
+
+req.user = user; // attach user to request
+next();
     console.log("userauth passed!")
  }
  catch(err)
