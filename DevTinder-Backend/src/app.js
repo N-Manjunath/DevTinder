@@ -7,7 +7,11 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({
+  origin: "https://dev-tinder-r1fo-xzidts2n0-n-manjunaths-projects.vercel.app", // your frontend URL
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(cookieParser());
 

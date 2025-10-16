@@ -4,6 +4,7 @@
  try{  
    console.log("userauth triggered !"); 
     const {token}=req.cookies;
+    console.log("cookies",req.cookies);
     console.log(token);
     if(!token)
     {
