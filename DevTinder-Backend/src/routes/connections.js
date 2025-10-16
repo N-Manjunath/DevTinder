@@ -3,7 +3,6 @@ const Connections=require('../models/Connections')
 const userAuth = require("../middleware/userAuth");
 const { findById } = require("../models/user");
 const User = require("../models/user");
-const { route } = require("./UserInfo");
 const router=express.Router();
 
 
