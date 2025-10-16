@@ -24,13 +24,14 @@ router.post("/signup",async (req,res)=>{
     //console.log(user1);
     //console.log(saveduser); 
 // ✅ Determine production mode by Render URL or fallback
-const isProduction = process.env.VITE_API_URL?.includes("https://") || false;
 
- res.cookie("token", token, {
+ const isProduction = true; // because Render is HTTPS
+
+res.cookie("token", token, {
   httpOnly: true,
-  secure: true,         // Render HTTPS
-  sameSite: "none",     // cross-origin
-  domain: "devtinder-p5ic.onrender.com", // ✅ explicitly set backend domain
+  secure: isProduction,        // must be HTTPS in production
+  sameSite: "none",            // cross-origin
+  // ✅ remove domain, let browser assign cookie to backend domain automatically
   expires: new Date(Date.now() + 8*3600000),
 });
 
@@ -62,13 +63,13 @@ router.post("/login",async (req,res)=>
     const token=await user.isjwt();
   //  res.cookie("token", token,
   //   {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
-const isProduction = process.env.VITE_API_URL?.includes("https://") || false;
+const isProduction = true; // because Render is HTTPS
 
- res.cookie("token", token, {
+res.cookie("token", token, {
   httpOnly: true,
-  secure: true,         // Render HTTPS
-  sameSite: "none",     // cross-origin
-  domain: "devtinder-p5ic.onrender.com", // ✅ explicitly set backend domain
+  secure: isProduction,        // must be HTTPS in production
+  sameSite: "none",            // cross-origin
+  // ✅ remove domain, let browser assign cookie to backend domain automatically
   expires: new Date(Date.now() + 8*3600000),
 });
 
