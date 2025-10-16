@@ -7,6 +7,10 @@ require("dotenv").config();
 const app = express();
 
 // Middleware
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  // You can add any static URLs if you have them
+];
 app.use(cors({
   origin: function(origin, callback) {
     // allow requests with no origin (like Postman, curl)
