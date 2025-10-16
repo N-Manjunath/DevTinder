@@ -8,9 +8,18 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "https://dev-tinder-r1fo-xzidts2n0-n-manjunaths-projects.vercel.app", // your frontend URL
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman, curl)
+    if (!origin) return callback(null, true);
+    // allow any origin ending with your vercel project domain
+    if (origin.endsWith(".vercel.app")) return callback(null, true);
+
+    // else block
+    callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
+
 
 app.use(express.json());
 app.use(cookieParser());
