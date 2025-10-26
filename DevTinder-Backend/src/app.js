@@ -6,18 +6,12 @@ require("dotenv").config();
 
 const app = express();
 
-// Middleware
-const allowedOrigins = [
-  "http://localhost:5173",
-];
 
 app.use(cors({
-  origin: function(origin, callback) {
-    // allow requests from any origin that sends credentials
-    callback(null, true);
-  },
-  credentials: true,
+  origin: ["http://localhost:5173", "https://dev-tinder-7tsy.vercel.app"],
+  credentials: true
 }));
+
 
 
 
