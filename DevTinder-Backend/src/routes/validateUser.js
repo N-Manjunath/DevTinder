@@ -23,11 +23,11 @@ router.post("/signup",async (req,res)=>{
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: true,        // must be HTTPS in production
-  sameSite: "none",            // cross-origin
-  // ✅ remove domain, let browser assign cookie to backend domain automatically
-  expires: new Date(Date.now() + 8*3600000),
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "none",
+  maxAge: 8 * 60 * 60 * 1000, // 8 hours
 });
+
 
 
     res.send(saveduser);
@@ -61,11 +61,11 @@ const isProduction = true; // because Render is HTTPS
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: true,        // must be HTTPS in production
-  sameSite: "none",            // cross-origin
-  // ✅ remove domain, let browser assign cookie to backend domain automatically
-  expires: new Date(Date.now() + 8*3600000),
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "none",
+  maxAge: 8 * 60 * 60 * 1000, // 8 hours
 });
+
     res.send(user);
   } catch (err) {
    return res.status(400).send("Failed :" + err.message);
