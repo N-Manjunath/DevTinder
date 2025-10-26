@@ -2,20 +2,20 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addrequests, removeReq } from '../utils/RequestsSlice';
+import API from '../api';
 
 const Requests = () => {
     const data=useSelector(store=>store.requests);
     const dispatch=useDispatch();
     const fetchReq=async()=>
     {
-        const res=await axios(`${import.meta.env.VITE_API_URL}/users/requests/received`,{withCredentials:true});
-      //  console.log(res.data);
+        const res=await API.get('/users/requests/received');
         dispatch(addrequests(res.data));
     }
     const handlereq=async(status,reqId)=>
     {
-        const res=await axios.post(`${import.meta.env.VITE_API_URL}/review/'+status+'/'+reqId,{}`,{withCredentials:true});
-        dispatch(removeReq(reqId));
+        const res=await API.post( `/review/${status}/${reqId}`,{});
+        dispatch(removeReq(res.data));
     }
     useEffect(()=>
     {
@@ -34,7 +34,6 @@ const Requests = () => {
             {
                 const{_id}=data;
                 const{firstName,lastName,Age,Gender,PhotoUrl}=data.fromID;
-                console.log(PhotoUrl);
                 return(
                    <div key={_id} className="card bg-base-200 w-80 my-5 mx-auto flex-1">
   <div className="flex items-center p-3">

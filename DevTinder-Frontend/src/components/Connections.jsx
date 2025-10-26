@@ -2,15 +2,15 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnections } from '../utils/ConnectionSlice';
+import API from '../api';
 
 const Connections = () => {
     const dispatch=useDispatch();
     const data=useSelector((store)=>store.connections);
-    //console.log(data);
     const fetchconnections=async()=>
     {
         try{
-            const res=await axios(`${import.meta.env.VITE_API_URL}/users/connections`,{withCredentials:true});
+            const res=await API.get('/users/connections');
         dispatch(addConnections(res.data));
         }catch(err)
         {

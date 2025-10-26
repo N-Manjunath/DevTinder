@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import API from '../api';
 const Login = () => {
   const dispatch=useDispatch();
     const[EmailId,setEmailId]=useState("");
@@ -17,11 +18,10 @@ const Login = () => {
     const handlelogin=async()=>
     {
         try{
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/login`,{
+        const res = await API.post('/login',{
             EmailId,
             Password,
-        },{withCredentials:true});
-      //  console.log(res.data);
+        });
         dispatch(addUser(res.data));
        return navigate("/");
         }
@@ -34,13 +34,12 @@ const Login = () => {
        const handlesignup=async()=>
       {
         try{
-        const res = await axios.post(`${import.meta.env.VITE_API_URL}/signup`,{
+        const res = await API.post('/signup',{
           firstName,
           lastName,
             EmailId,
             Password,
-        },{withCredentials:true});
-      console.log(res);
+        });
         dispatch(addUser(res.data));
        return navigate("/profile");
         }
