@@ -15,14 +15,12 @@ router.post("/send/:status/:userID",userAuth,async(req,res)=>
     const toID=req.params.userID;
     const status=req.params.status;
      const hi1=await User.findById(toID);
-    //console.log(hi1);
     if(!hi1)
     {
         throw new Error("the to user doesnt exists");
     }
     const hi=await Connections.findOne({
         $or:[{fromID,toID},{fromID:toID,toID:fromID}]});
-    //console.log(hi);
     if(hi)
     {
         throw new Error("The connection already exists !");
@@ -36,7 +34,6 @@ router.post("/send/:status/:userID",userAuth,async(req,res)=>
    
     const data=await Userconnection.save();
     res.json(data);
-    //console.log(data);
 }
 catch(err)
 {

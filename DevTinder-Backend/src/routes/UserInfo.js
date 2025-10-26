@@ -36,7 +36,6 @@ router.patch('/user/edit',userAuth,async(req,res)=>
             data.Password=await bcrypt.hash(data.Password,4)
         }
 const updatedUser= await User.findByIdAndUpdate(userID,data,{runValidators: true,new:true});
-    //console.log(datainfo);
     res.send(updatedUser);
 }   catch(err){
         res.status(400).send("ERROR :"+err.message);

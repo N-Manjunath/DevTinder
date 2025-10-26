@@ -19,24 +19,18 @@ router.post("/signup",async (req,res)=>{
    });
    const saveduser=await user1.save();
    const token=await saveduser.isjwt();
-  //  res.cookie("token", token,
-  //   {expires:new Date(Date.now()+8*3600000)});
-    //console.log(user1);
-    //console.log(saveduser); 
-// ✅ Determine production mode by Render URL or fallback
-
- const isProduction = true; // because Render is HTTPS
+  
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,        // must be HTTPS in production
+  secure: true,        // must be HTTPS in production
   sameSite: "none",            // cross-origin
   // ✅ remove domain, let browser assign cookie to backend domain automatically
   expires: new Date(Date.now() + 8*3600000),
 });
 
 
-    res.json({saveduser,token});
+    res.send(saveduser);
   }
 catch(err){
         return res.status(400).send(""+ err.message);
@@ -67,15 +61,12 @@ const isProduction = true; // because Render is HTTPS
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,        // must be HTTPS in production
+  secure: true,        // must be HTTPS in production
   sameSite: "none",            // cross-origin
   // ✅ remove domain, let browser assign cookie to backend domain automatically
   expires: new Date(Date.now() + 8*3600000),
 });
-
-
-
-    res.json({user,token});
+    res.send(user);
   } catch (err) {
    return res.status(400).send("Failed :" + err.message);
   }

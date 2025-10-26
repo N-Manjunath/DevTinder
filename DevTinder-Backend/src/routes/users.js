@@ -56,7 +56,6 @@ router.get("/user/feed",userAuth,async(req,res)=>
         hideuser.add(req.fromID.toString());
         hideuser.add(req.toID.toString());
     })
-    //console.log(hideuser);
     const user=await User.find({
        $and: [{_id:{$nin: Array.from(hideuser)}},
         {_id:{$ne:LoggedInuser._id}},],

@@ -3,7 +3,6 @@
  const userAuth=async(req,res,next)=>{
  try{  
   const token = req.cookies.token; // ✅ read token from cookies
-console.log(token);
 if (!token) {
   return res.status(401).send("Please login"); // ✅ fail gracefully
 }
@@ -14,7 +13,7 @@ if (!user) return res.status(401).send("User not found");
 
 req.user = user; // attach user to request
 next();
-    console.log("userauth passed!")
+    // console.log("userauth passed!")
  }
  catch(err)
  {
