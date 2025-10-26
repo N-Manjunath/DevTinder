@@ -8,7 +8,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://dev-tinder-7tsy.vercel.app"],
+  origin: ["http://localhost:5173"],
   credentials: true
 }));
 

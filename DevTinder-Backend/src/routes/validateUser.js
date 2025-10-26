@@ -21,13 +21,15 @@ router.post("/signup",async (req,res)=>{
    const token=await saveduser.isjwt();
   
 
+const isProduction = process.env.NODE_ENV === "production";
+
 res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path:'/',
-  maxAge: 8 * 60 * 60 * 1000, // 8 hours
+  secure: isProduction,       // ❗ false in localhost
+  sameSite: isProduction ? "none" : "lax",
+  expires: new Date(Date.now() + 8 * 3600000),
 });
+
 
 
 
@@ -56,17 +58,16 @@ router.post("/login",async (req,res)=>
        return res.status(401).send("Invalid Email or Password");
     }
     const token=await user.isjwt();
-  //  res.cookie("token", token,
-  //   {expires:new Date(Date.now()+8*3600000)});   // 👈 important when using multiple port);
-const isProduction = true; // because Render is HTTPS
+
+const isProduction = process.env.NODE_ENV === "production";
 
 res.cookie("token", token, {
   httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  path:'/',
-  maxAge: 8 * 60 * 60 * 1000, // 8 hours
+  secure: isProduction,       // ❗ false in localhost
+  sameSite: isProduction ? "none" : "lax",
+  expires: new Date(Date.now() + 8 * 3600000),
 });
+
 
     res.send(user);
   } catch (err) {
@@ -76,9 +77,6 @@ res.cookie("token", token, {
 
 // LOGOUT
 router.post("/logout", (req, res) => {
-//  res.cookie("token",null,{
-//   expires:new Date(Date.now()),
-//  });
 
 res.cookie("token", null, {
   httpOnly: true,
