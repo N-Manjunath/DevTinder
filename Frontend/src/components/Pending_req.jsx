@@ -26,7 +26,6 @@ const Pending_req = () => {
     />
   </figure>
 
-  {/* Content */}
   <div className="card-body items-center">
     <h2 className="card-title">{data.user.firstName + " " + data.user.lastName}</h2>
     <h1 className="mt-1 text-sm">Status: {'Pending' || data.status}</h1>
