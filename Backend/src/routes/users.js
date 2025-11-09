@@ -4,13 +4,31 @@ const Connections = require('../models/Connections');
 const User = require('../models/user');
 const router=express.Router();
 
+
+//to check the connection status
+
+router.get("/users/requests/sent",userAuth,async(req,res)=>
+{
+    const LoggedInuser=req.user;
+    const connections=await Connections.find({fromID:LoggedInuser._id,status:"Interested"})
+    .populate("toID","firstName lastName PhotoUrl");
+    const data=connections.map((conn)=>({
+         user:conn.toID,
+        status:conn.status
+    }));
+       
+   
+    res.json(data);
+
+})
+
 //to get all the requests of a user
 
 router.get("/users/requests/received",userAuth,async(req,res)=>
 {
     const LoggedInuser=req.user;
     const data=await Connections.find({toID:LoggedInuser._id,status:"Interested"})
-    .populate("fromID"," firstName lastName Gender Age PhotoUrl");
+    .populate("fromID","firstName lastName Gender Age PhotoUrl");
     res.json(data);
 })
 
@@ -60,6 +78,7 @@ router.get("/user/feed",userAuth,async(req,res)=>
        $and: [{_id:{$nin: Array.from(hideuser)}},
         {_id:{$ne:LoggedInuser._id}},],
     }).select(USER_DATA)
+    // console.log(user);
     res.json(user);
 })
 

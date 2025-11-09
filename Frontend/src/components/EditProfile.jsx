@@ -27,7 +27,6 @@ const EditProfile = ({user}) => {
     const preview=()=>
     {
       setshow(!show);
-      console.log("hi !");
     }
   return (
   <div className='flex'>
