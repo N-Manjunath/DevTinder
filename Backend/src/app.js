@@ -21,8 +21,8 @@ app.use(cookieParser());
 
 // Routers
 const feedRouter = require("./routes/users");
-const userRouter = require("./routes/UserInfo");       // your get/edit user routes
-const authRouter = require("./routes/validateUser");       // feed & connections
+const userRouter = require("./routes/UserInfo");      
+const authRouter = require("./routes/validateUser");       
 const connectionsRouter = require("./routes/connections");
 
 app.use("/", authRouter);          // /auth/signup, /auth/login
