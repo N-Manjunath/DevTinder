@@ -1,23 +1,27 @@
  const User=require("../models/user");
  const jwt=require("jsonwebtoken");
- const userAuth=async(req,res,next)=>{
- try{  
-  const token = req.cookies.token; // ✅ read token from cookies
-if (!token) {
-  return res.status(401).send("Please login"); // ✅ fail gracefully
-}
+const userAuth = async (req, res, next) => {
+  try {
+    console.log("Cookies:", req.cookies);
 
-const decoded = jwt.verify(token, process.env.JWT_SECRET); // use env secret
-const user = await User.findById(decoded._id);
-if (!user) return res.status(401).send("User not found");
+    const token = req.cookies.token;
+    console.log("Token:", token);
 
-req.user = user; // attach user to request
-next();
-    // console.log("userauth passed!")
- }
- catch(err)
- {
-    res.status(400).send("Failed  :"+err.message);
- }
- }
+    if (!token) {
+      return res.status(401).send("Please login");
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("Decoded:", decoded);
+
+    const user = await User.findById(decoded._id);
+    console.log("User:", user);
+
+    req.user = user;
+    next();
+  } catch (err) {
+    console.log("AUTH ERROR:", err.message);
+    res.status(400).send(err.message);
+  }
+};
  module.exports=userAuth;

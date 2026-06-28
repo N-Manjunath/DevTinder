@@ -23,11 +23,17 @@ router.post("/signup",async (req,res)=>{
 
 const isProduction = process.env.NODE_ENV === "production";
 
+// res.cookie("token", token, {
+//   httpOnly: true,
+//   secure: isProduction,       // ❗ false in localhost
+//   sameSite: isProduction ? "none" : "lax",
+//   expires: new Date(Date.now() + 8 * 3600000),
+// });
 res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,       // ❗ false in localhost
-  sameSite: isProduction ? "none" : "lax",
-  expires: new Date(Date.now() + 8 * 3600000),
+  secure: true,
+  sameSite: "none",
+  maxAge: 8 * 60 * 60 * 1000,
 });
 
 
@@ -61,13 +67,20 @@ router.post("/login",async (req,res)=>
 
 const isProduction = process.env.NODE_ENV === "production";
 
+// res.cookie("token", token, {
+//   httpOnly: true,
+//   secure: isProduction,       // ❗ false in localhost
+//   sameSite: isProduction ? "none" : "lax",
+//   expires: new Date(Date.now() + 8 * 3600000),
+// });
+
 res.cookie("token", token, {
   httpOnly: true,
-  secure: isProduction,       // ❗ false in localhost
-  sameSite: isProduction ? "none" : "lax",
-  expires: new Date(Date.now() + 8 * 3600000),
+  secure: true,
+  sameSite: "none",
+  maxAge: 8 * 60 * 60 * 1000,
 });
-
+console.log("Cookie sent");
 
     res.send(user);
   } catch (err) {
