@@ -66,7 +66,7 @@ router.post("/login",async (req,res)=>
     const token=await user.isjwt();
 
 const isProduction = process.env.NODE_ENV === "production";
-
+console.log("NODE_ENV =", process.env.NODE_ENV);
 // res.cookie("token", token, {
 //   httpOnly: true,
 //   secure: isProduction,       // ❗ false in localhost
@@ -80,6 +80,7 @@ res.cookie("token", token, {
   sameSite: "none",
   maxAge: 8 * 60 * 60 * 1000,
 });
+console.log("Cookie sent");
 console.log("Cookie sent");
 
     res.send(user);
