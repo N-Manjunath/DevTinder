@@ -2,18 +2,19 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addrequests, removeReq } from '../utils/RequestsSlice';
+import { API_URL } from '../utils/api';
 
 const Requests = () => {
     const data=useSelector(store=>store.requests);
     const dispatch=useDispatch();
     const fetchReq=async()=>
     {
-        const res=await axios.get('http://localhost:1234/users/requests/received',{withCredentials:true});
+      const res=await axios.get(`${API_URL}/users/requests/received`,{withCredentials:true});
         dispatch(addrequests(res.data));
     }
     const handlereq=async(status,reqId)=>
     {
-        const res=await axios.post( `http://localhost:1234/review/${status}/${reqId}`,{},{withCredentials:true});
+      const res=await axios.post( `${API_URL}/review/${status}/${reqId}`,{},{withCredentials:true});
         dispatch(removeReq(res.data));
     }
     useEffect(()=>

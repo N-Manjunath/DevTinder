@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../utils/api';
 const EditProfile = ({user}) => {
     if(!user) return;
     const[firstName,setfirstName]=useState(user.firstName);
@@ -17,7 +18,7 @@ const EditProfile = ({user}) => {
     const navigate=useNavigate();
     const saveprofile=async()=>{
         try{
-            const res=await axios.patch('http://localhost:1234/user/edit',{firstName,lastName,Gender,Bio,Age,Skills,PhotoUrl},{withCredentials:true});
+            const res=await axios.patch(`${API_URL}/user/edit`,{firstName,lastName,Gender,Bio,Age,Skills,PhotoUrl},{withCredentials:true});
             dispatch(addUser(res.data));
             navigate("/");
           }catch(err){

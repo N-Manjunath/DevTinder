@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../utils/api';
 const Login = () => {
   const dispatch=useDispatch();
     const[EmailId,setEmailId]=useState("");
@@ -17,7 +18,7 @@ const Login = () => {
     const handlelogin=async()=>
     {
         try{
-        const res = await axios.post('http://localhost:1234/login',{
+      const res = await axios.post(`${API_URL}/login`,{
             EmailId,
             Password,
         },{withCredentials:true});
@@ -33,7 +34,7 @@ const Login = () => {
        const handlesignup=async()=>
       {
         try{
-        const res = await axios.post('http://localhost:1234/signup',{
+        const res = await axios.post(`${API_URL}/signup`,{
           firstName,
           lastName,
             EmailId,

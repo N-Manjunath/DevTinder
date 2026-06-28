@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../utils/userSlice'
 import Footer from './Footer'
 import { useState } from 'react'
+import { API_URL } from '../utils/api'
 
 const Body = () => {
   const dispatch=useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
   const navigate=useNavigate();
   const fetchUser=async()=>{
-    await axios.get('http://localhost:1234/user',{withCredentials:true})
+    await axios.get(`${API_URL}/user`,{withCredentials:true})
     .then(res=>{
       dispatch(addUser(res.data));
       return navigate('/');

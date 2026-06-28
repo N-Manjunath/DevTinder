@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { removeFeed } from '../utils/feedSlice';
+import { API_URL } from '../utils/api';
 
 const UserCard = ({user}) => {
 const dispatch=useDispatch();
@@ -9,7 +10,7 @@ const dispatch=useDispatch();
 const{firstName,lastName,Age,Gender,Bio,_id,PhotoUrl}=user;
 const handlesentreq=async(status,reqID)=>
     {
-        const res=await axios.post(`http://localhost:1234/send/${status}/${reqID}`,{},{withCredentials:true});
+    const res=await axios.post(`${API_URL}/send/${status}/${reqID}`,{},{withCredentials:true});
         dispatch(removeFeed(reqID));
     }
   return (
