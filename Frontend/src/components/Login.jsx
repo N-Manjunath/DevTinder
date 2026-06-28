@@ -15,40 +15,42 @@ const Login = () => {
     const[isLogin,setisLogin]=useState(false);
     const[showPassword,setShowPassword]=useState(false);
     const navigate=useNavigate();
-    const handlelogin=async()=>
-    {
-        try{
-      const res = await axios.post(`${API_URL}/login`,{
-            EmailId,
-            Password,
-        },{withCredentials:true});
-        dispatch(addUser(res.data));
-       return navigate("/");
-        }
-        catch(err)
-        {
-          seterror(err.response.data);
-            //console.log(err.response.data);
-        }
-    }
-       const handlesignup=async()=>
-      {
-        try{
-        const res = await axios.post(`${API_URL}/signup`,{
-          firstName,
-          lastName,
-            EmailId,
-            Password,
-        },{withCredentials:true});
-        dispatch(addUser(res.data));
-       return navigate("/profile");
-        }
-        catch(err)
-        {
-          seterror(err.response.data);
-            //console.log(err.response.data);
-        }
-      }
+  const handlelogin = async () => {
+  try {
+    const res = await axios.post(`${API_URL}/login`, {
+      EmailId,
+      Password,
+    });
+
+    // Save JWT
+    localStorage.setItem("token", res.data.token);
+
+    // Save user in Redux
+    dispatch(addUser(res.data.user));
+
+    navigate("/");
+  } catch (err) {
+    seterror(err.response?.data?.message || "Login failed");
+  }
+};
+   const handlesignup = async () => {
+  try {
+    const res = await axios.post(`${API_URL}/signup`, {
+      firstName,
+      lastName,
+      EmailId,
+      Password,
+    });
+
+    localStorage.setItem("token", res.data.token);
+
+    dispatch(addUser(res.data.user));
+
+    navigate("/profile");
+  } catch (err) {
+    seterror(err.response?.data?.message || "Signup failed");
+  }
+};
   return (
     <div className='flex justify-center my-4'>
     <div className="card bg-base-300 text-primary-content w-80  justify-center">

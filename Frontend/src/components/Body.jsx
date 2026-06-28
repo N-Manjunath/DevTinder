@@ -7,17 +7,16 @@ import { addUser } from '../utils/userSlice'
 import Footer from './Footer'
 import { useState } from 'react'
 import { API_URL } from '../utils/api'
+import api from "../utils/axios";
 
 const Body = () => {
   const dispatch=useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
   const navigate=useNavigate();
   const fetchUser=async()=>{
-    await axios.get(`${API_URL}/user`,{withCredentials:true})
-    .then(res=>{
-      dispatch(addUser(res.data));
-      return navigate('/');
-    })
+    const res = await api.get("/user");
+dispatch(addUser(res.data));
+navigate("/")
   .catch(err=>{
     navigate('/login');
     console.log(err);

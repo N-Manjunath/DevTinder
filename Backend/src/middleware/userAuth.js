@@ -1,27 +1,43 @@
- const User=require("../models/user");
- const jwt=require("jsonwebtoken");
+const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+
 const userAuth = async (req, res, next) => {
   try {
-    console.log("Cookies:", req.cookies);
+    // Read Authorization header
+    const authHeader = req.headers.authorization;
 
-    const token = req.cookies.token;
-    console.log("Token:", token);
-
-    if (!token) {
-      return res.status(401).send("Please login");
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({
+        message: "Please login",
+      });
     }
 
+    // Extract token
+    const token = authHeader.split(" ")[1];
+
+    // Verify JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded:", decoded);
 
+    // Find user
     const user = await User.findById(decoded._id);
-    console.log("User:", user);
 
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    // Attach user to request
     req.user = user;
+
     next();
   } catch (err) {
-    console.log("AUTH ERROR:", err.message);
-    res.status(400).send(err.message);
+    console.error("AUTH ERROR:", err.message);
+
+    return res.status(401).json({
+      message: "Invalid or expired token",
+    });
   }
 };
- module.exports=userAuth;
+
+module.exports = userAuth;
