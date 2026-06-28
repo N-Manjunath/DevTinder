@@ -10,7 +10,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://devtinder-app-alpha.vercel.app"
+    "https://dev-tinder-six-nu.vercel.app"
   ],
   credentials: true
 }));
