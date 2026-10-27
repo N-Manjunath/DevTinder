@@ -2,17 +2,25 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { removeFeed } from '../utils/feedSlice';
-import { API_URL } from '../utils/api';
+import api from '../utils/axios';
+const UserCard = ({ user }) => {
+  const dispatch = useDispatch();
 
-const UserCard = ({user}) => {
-const dispatch=useDispatch();
-  if(!user || user.length==0) return <div className='text-3xl text-center font-bold my-4'>No More Feed to see</div>
-const{firstName,lastName,Age,Gender,Bio,_id,PhotoUrl}=user;
-const handlesentreq=async(status,reqID)=>
-    {
-    const res=await axios.post(`${API_URL}/send/${status}/${reqID}`,{},{withCredentials:true});
-        dispatch(removeFeed(reqID));
+  if (!user || Object.keys(user).length === 0) {
+    return <div className="text-3xl text-center font-bold my-4">No More Feed to see</div>;
+  }
+
+  const { firstName, lastName, Age, Gender, Bio, _id, PhotoUrl } = user;
+
+  const handlesentreq = async (status, reqID) => {
+    try {
+      await api.post(`/send/${status}/${reqID}`);
+      dispatch(removeFeed(reqID));
+    } catch (err) {
+      console.error(err);
     }
+  };
+
   return (
 
 <div className="card bg-base-300 w-80 shadow-md mx-auto my-12 rounded-lg overflow-hidden">

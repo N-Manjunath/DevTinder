@@ -2,17 +2,23 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react'
-import { API_URL } from '../utils/api';
+import api from "../utils/axios";
 
 const Pending_req = () => {
-    const[pending,setpending]=useState([]);
-    const fetchPending=async ()=>{
-    const res=await axios.get(`${API_URL}/users/requests/sent`,{withCredentials:true});
+  const [pending, setpending] = useState([]);
+
+  useEffect(() => {
+    const fetchPending = async () => {
+      try {
+        const res = await api.get("/users/requests/sent");
         setpending(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     };
-    useEffect(()=>{
-        fetchPending();
-    },[]);
+    fetchPending();
+  }, []);
+
   return (
     pending.map((data)=>
     {

@@ -3,32 +3,34 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
-import { API_URL } from '../utils/api';
-const EditProfile = ({user}) => {
-    if(!user) return;
-    const[firstName,setfirstName]=useState(user.firstName);
-    const[lastName,setlastName]=useState(user.lastName);
-    const[Age,setAge]=useState(user.Age||" ");
-    const[Gender,setGender]=useState('male'||user.Gender);
-    const[Bio,setBio]=useState(user.Bio||" ");
-    const[Skills,setSkills]=useState(user.Skills ||" ");
-    const[PhotoUrl,setPhotoUrl]=useState(user.PhotoUrl);
-    const[show,setshow]=useState(false);
-    const dispatch=useDispatch();
-    const navigate=useNavigate();
-    const saveprofile=async()=>{
-        try{
-            const res=await axios.patch(`${API_URL}/user/edit`,{firstName,lastName,Gender,Bio,Age,Skills,PhotoUrl},{withCredentials:true});
-            dispatch(addUser(res.data));
-            navigate("/");
-          }catch(err){
-            console.log(err);
-        }
+import api from "../utils/axios";
+
+const EditProfile = ({ user }) => {
+  const [firstName, setfirstName] = useState(user?.firstName || "");
+  const [lastName, setlastName] = useState(user?.lastName || "");
+  const [Age, setAge] = useState(user?.Age || "");
+  const [Gender, setGender] = useState(user?.Gender || "male");
+  const [Bio, setBio] = useState(user?.Bio || "");
+  const [Skills, setSkills] = useState(user?.Skills || "");
+  const [PhotoUrl, setPhotoUrl] = useState(user?.PhotoUrl || "");
+  const [show, setshow] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  if (!user) return null; // after all hooks
+   const preview = () => setshow((prev) => !prev);
+
+  const saveprofile = async () => {
+    try {
+      const res = await api.patch("/user/edit", {
+        firstName, lastName, Gender, Bio, Age, Skills, PhotoUrl,
+      });
+      dispatch(addUser(res.data));
+      navigate("/");
+    } catch (err) {
+      console.log(err);
     }
-    const preview=()=>
-    {
-      setshow(!show);
-    }
+  };
   return (
   <div className='flex'>
     <div className="card bg-base-300 w-80 shadow-sm mx-auto my-12">

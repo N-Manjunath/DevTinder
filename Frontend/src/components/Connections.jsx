@@ -2,24 +2,23 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addConnections } from '../utils/ConnectionSlice';
-import { API_URL } from '../utils/api';
+import api from "../utils/axios";
 
 const Connections = () => {
-    const dispatch=useDispatch();
-    const data=useSelector((store)=>store.connections);
-    const fetchconnections=async()=>
-    {
-        try{
-        const res=await axios.get(`${API_URL}/users/connections`,{withCredentials:true});
+  const dispatch = useDispatch();
+  const data = useSelector((store) => store.connections);
+
+  useEffect(() => {
+    const fetchConnections = async () => {
+      try {
+        const res = await api.get("/users/connections");
         dispatch(addConnections(res.data));
-        }catch(err)
-        {
-            console.log(err);
-        }
-    }
-    useEffect(()=>{
-        fetchconnections();
-    },[])
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchConnections();
+  }, [dispatch]);
     if(!data|| data.length==0)
     {
       return (<div className='text-3xl  font-bold text-center'>No Connections</div>)

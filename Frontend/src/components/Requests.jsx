@@ -2,25 +2,33 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addrequests, removeReq } from '../utils/RequestsSlice';
-import { API_URL } from '../utils/api';
+import api from "../utils/axios";
 
 const Requests = () => {
-    const data=useSelector(store=>store.requests);
-    const dispatch=useDispatch();
-    const fetchReq=async()=>
-    {
-      const res=await axios.get(`${API_URL}/users/requests/received`,{withCredentials:true});
-        dispatch(addrequests(res.data));
+  const data = useSelector((store) => store.requests);
+  const dispatch = useDispatch();
+
+  const fetchReq = async () => {
+    try {
+      const res = await api.get("/users/requests/received");
+      dispatch(addrequests(res.data));
+    } catch (err) {
+      console.log(err);
     }
-    const handlereq=async(status,reqId)=>
-    {
-      const res=await axios.post( `${API_URL}/review/${status}/${reqId}`,{},{withCredentials:true});
-        dispatch(removeReq(res.data));
+  };
+
+  const handlereq = async (status, reqId) => {
+    try {
+      await api.post(`/review/${status}/${reqId}`);
+      dispatch(removeReq(reqId));
+    } catch (err) {
+      console.log(err);
     }
-    useEffect(()=>
-    {
-        fetchReq();
-    },[])
+  };
+
+  useEffect(() => {
+    fetchReq();
+  }, []);
      if(!data || data.length==0) 
     {
         return <div className='text-2xl text-center my-7 font-bold'>No Connection requests found</div>;
